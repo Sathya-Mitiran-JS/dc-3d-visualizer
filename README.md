@@ -12,7 +12,7 @@ Sathya Mitiran Jayaprakash Suvithaa
 
 # Report
 
-## Demo images and videos of the project
+## Demo images of the project
 
 ### Large screen devices view
 
