@@ -3,8 +3,11 @@ https://data-center-visualization-website.vercel.app/
 
 ## Members
 Daniel Carpenter
+
 Nicolas Salazar Sanchez
+
 Adithya Raman
+
 Sathya Mitiran Jayaprakash Suvithaa
 
 # Report
