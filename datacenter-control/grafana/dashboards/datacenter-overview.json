@@ -1,0 +1,202 @@
+{
+    "id": null,
+    "uid": "datacenter-overview",
+    "title": "Datacenter Backend Overview",
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "version": 1,
+    "refresh": "5s",
+
+    "panels": [{
+            "type": "stat",
+            "title": "CPU Load (1m)",
+            "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+            "targets": [
+                { "expr": "cpu_load_1min", "refId": "A" }
+            ]
+        },
+        {
+            "type": "stat",
+            "title": "CPU Load (5m)",
+            "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+            "targets": [
+                { "expr": "cpu_load_5min", "refId": "A" }
+            ]
+        },
+        {
+            "type": "stat",
+            "title": "CPU Load (15m)",
+            "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+            "targets": [
+                { "expr": "cpu_load_15min", "refId": "A" }
+            ]
+        },
+
+
+        {
+            "type": "stat",
+            "title": "Available Memory (GB)",
+            "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+            "targets": [{
+                "expr": "memory_available_bytes / 1024 / 1024 / 1024",
+                "refId": "A"
+            }]
+        },
+
+
+        {
+            "type": "timeseries",
+            "title": "CPU Usage (%)",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+            "targets": [{
+                "expr": "system_cpu_percent",
+                "refId": "A"
+            }]
+        },
+
+        {
+            "type": "timeseries",
+            "title": "Memory Usage (%)",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+            "targets": [{
+                "expr": "system_memory_percent",
+                "refId": "A"
+            }]
+        },
+
+
+        {
+            "type": "timeseries",
+            "title": "Disk Read Bytes / sec",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+            "targets": [{
+                "expr": "rate(disk_read_bytes_total[1m])",
+                "refId": "A"
+            }]
+        },
+
+        {
+            "type": "timeseries",
+            "title": "Disk Write Bytes / sec",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+            "targets": [{
+                "expr": "rate(disk_write_bytes_total[1m])",
+                "refId": "A"
+            }]
+        },
+
+
+        {
+            "type": "timeseries",
+            "title": "Network Sent (bytes/sec)",
+            "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
+            "targets": [{
+                "expr": "rate(network_bytes_sent_total[1m])",
+                "refId": "A"
+            }]
+        },
+
+        {
+            "type": "timeseries",
+            "title": "Network Received (bytes/sec)",
+            "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
+            "targets": [{
+                "expr": "rate(network_bytes_recv_total[1m])",
+                "refId": "A"
+            }]
+        },
+        {
+            "type": "table",
+            "title": "Top Processes (Backend)",
+
+            "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "P4CF0BA1696A3D681"
+            },
+
+            "targets": [{
+                "refId": "A",
+                "type": "json",
+
+                "source": "url",
+                "format": "table",
+
+                "url": "http://backend:5000/api/metrics/detail",
+
+                "url_options": {
+                    "method": "GET"
+                },
+
+                "jsonData": {
+                    "root_selector": "processes",
+                    "root_is_not_array": false
+                }
+            }],
+
+            "transformations": [{
+                "id": "sortBy",
+                "options": {
+                    "sort": [{
+                        "field": "cpu_percent",
+                        "desc": true
+                    }]
+                }
+            }],
+
+            "options": {
+                "showHeader": true
+            },
+
+            "gridPos": {
+                "x": 0,
+                "y": 32,
+                "w": 12,
+                "h": 10
+            }
+        },
+        {
+            "type": "table",
+            "title": "Top Processes by CPU",
+            "gridPos": { "h": 10, "w": 24, "x": 0, "y": 30 },
+
+            "datasource": {
+                "type": "yesoreyeram-infinity-datasource",
+                "uid": "P4CF0BA1696A3D681"
+            },
+
+            "targets": [{
+                "refId": "A",
+                "type": "json",
+
+                "source": "url",
+                "format": "table",
+
+                "url": "http://backend:5000/api/metrics/detail",
+
+                "url_options": {
+                    "method": "GET"
+                },
+
+                "jsonData": {
+                    "root_selector": "processes",
+                    "root_is_not_array": false
+                }
+            }],
+
+            "transformations": [{
+                "id": "sortBy",
+                "options": {
+                    "sort": [{
+                        "field": "cpu_percent",
+                        "desc": true
+                    }]
+                }
+            }],
+
+            "options": {
+                "showHeader": true
+            }
+        }
+
+    ]
+}

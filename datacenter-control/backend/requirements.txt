@@ -1,0 +1,10 @@
+# Flask for API
+Flask==3.0.0
+
+# psutil for system stats
+psutil==5.9.8
+
+# Prometheus exporter client for Flask
+prometheus_client==0.20.0
+
+pandas

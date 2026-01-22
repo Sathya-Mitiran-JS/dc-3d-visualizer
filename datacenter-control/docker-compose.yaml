@@ -1,0 +1,84 @@
+# ==============================
+# DOCKER COMPOSE CONFIGURATION
+# ==============================
+version: '3.8' # Obsolte
+
+services:
+  # --------------------------------
+  # 1. Flask Backend (Python)
+  # --------------------------------
+  backend:
+    build: ./backend
+    container_name: datacenter-backend
+    ports:
+      - "5050:5000"
+    networks:
+      - monitor-net
+    restart: unless-stopped
+    # env_file:
+    #   - .venv
+
+  # --------------------------------
+  # 2. Prometheus (Metrics storage)
+  # --------------------------------
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      # Mount our Prometheus config file
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      # Optional: persist Prometheus data (so metrics survive restarts)
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"                  # Access Prometheus at localhost:9090
+    depends_on:
+      - backend                      # Wait for Flask to be available
+    networks:
+      - monitor-net
+    restart: unless-stopped
+
+  # --------------------------------
+  # 3. Grafana (Visualization)
+  # --------------------------------
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    # -------------------------------------------
+    # Install Infinity plugin:
+    #   yesoreyeram-infinity-datasource
+    # This lets Grafana read JSON from your backend.
+    # -------------------------------------------
+    environment:
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+    ports:
+      - "3000:3000"                  # Access Grafana at localhost:3000
+    depends_on:
+      - prometheus
+    networks:
+      - monitor-net
+    restart: unless-stopped
+    volumes:
+      # Persist Grafana data (users, settings, etc.)
+      - grafana_data:/var/lib/grafana
+
+      # Provisioning for datasources + dashboards + alerting
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+      # Mount dashboard JSON files to the path from dashboard.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+
+# --------------------------------
+# Define shared Docker network
+# --------------------------------
+networks:
+  monitor-net:
+    driver: bridge
+
+# --------------------------------
+# Persistent volumes for data
+# --------------------------------
+volumes:
+  prometheus_data:
+  grafana_data:

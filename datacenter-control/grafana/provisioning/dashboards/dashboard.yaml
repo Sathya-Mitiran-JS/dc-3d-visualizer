@@ -1,0 +1,16 @@
+# ===========================================
+# GRAFANA DASHBOARD PROVISIONING
+# This file tells Grafana to load dashboards
+# from a specific folder at startup.
+# ===========================================
+apiVersion: 1
+
+providers:
+  - name: "Datacenter Dashboards"          # A logical name for this group
+    orgId: 1                               # Default organization
+    type: file                             # Dashboards are loaded from files
+    disableDeletion: false                 # Allow deleting from UI
+    editable: true                         # Dashboards can be edited
+    options:
+      # This path must match where we mount JSON dashboards in the container
+      path: /var/lib/grafana/dashboards

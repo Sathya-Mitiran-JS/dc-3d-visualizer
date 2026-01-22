@@ -1,0 +1,13 @@
+# ====================================================
+# INFINITY DATASOURCE
+# Allows Grafana to fetch JSON from your backend.
+# ====================================================
+
+apiVersion: 1
+
+datasources:
+  - name: "Backend JSON"
+    type: yesoreyeram-infinity-datasource   # Plugin type
+    access: proxy                          # Grafana proxies the request
+    url: http://backend:5000/api/metrics/detail   # The JSON endpoint
+    editable: true

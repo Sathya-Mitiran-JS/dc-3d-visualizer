@@ -1,0 +1,94 @@
+# TODO: update as necessary
+# ns89: Basic .gitignore for Python projects, including Docker and Node/React (future frontend)
+#       made with help of Chat GPT 5. 
+# ======================
+# Python
+# ======================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+.env/
+env/
+.venv/
+
+# Jupyter / cache
+.ipynb_checkpoints
+*.ipynb
+
+# Build / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+*.out
+*.pid
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Data
+data/
+logs/
+datasets/
+
+# ======================
+# Docker
+# ======================
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# ======================
+# Node / React (future frontend)
+# ======================
+node_modules/
+npm-debug.log
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ======================
+# VS Code / PyCharm / Editors
+# ======================
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# ======================
+# OS / Misc
+# ======================
+Thumbs.db
+.DS_Store
+ehthumbs.db
+Icon?

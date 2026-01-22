@@ -1,0 +1,14 @@
+# ===========================================
+# GRAFANA DATA SOURCE PROVISIONING
+# This file tells Grafana to automatically
+# add Prometheus as a data source at startup.
+# ===========================================
+apiVersion: 1
+
+datasources:
+  - name: Prometheus               # Name as it appears in Grafana
+    type: prometheus               # Data source type
+    access: proxy                  # Grafana server will proxy the requests
+    url: http://prometheus:9090    # URL of the Prometheus container (service name!)
+    isDefault: true                # Make this the default data source
+    editable: true                 # Allow editing in UI if needed
